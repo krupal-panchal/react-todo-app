@@ -1,21 +1,20 @@
-import Card from "../UI/Card";
-import classes from './ToDoList.module.css';
+import './ToDoLists.css';
 
 const ToDoList = props => {
     return (
-        <Card className={classes.todo}>
+        <div className="todo">
             <ul>
                 {
-                    props.todo.map((user) => {
+                    props.todo.map((todo) => {
                         return (
-                            <li key={user.id}>
-                                {user.name} ({user.age})
+                            <li key={todo.id} className={todo.priority}>
+                                {todo.title} (Priority - {todo.priority})
                             </li>
                         )
                     })
                 }
             </ul>
-        </Card>
+        </div>
     );
 }
 

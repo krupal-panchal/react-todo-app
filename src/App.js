@@ -7,13 +7,13 @@ function App() {
 
     const [todoList, setToDoList] = useState([]);
 
-    const addToDoHandler = (name, age) => {
+    const addToDoHandler = (title, priority) => {
         setToDoList((prevToDosList) => {
             return [
                 ...prevToDosList,
                 {
-                    name: name,
-                    age: age,
+                    title: title,
+                    priority: priority,
                     id: Math.random().toString(),
                 }
             ];

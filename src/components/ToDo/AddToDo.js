@@ -12,25 +12,28 @@ const AddToDo = (props) => {
     const [error, setError] = useState();
 
     const addUserHandler = (event) => {
+
         event.preventDefault();
+
         if (
             title.trim().length === 0
-            || priority.trim().length === 0
         ) {
             setError(
                 {
                     title: 'Invalid input',
-                    message: 'Enter a valid Title and Priority (Non-empty).',
+                    message: 'Enter a Title.',
                 }
             );
             return;
         }
 
-        if ( +priority < 1 ) {
+        if (
+            priority.trim().length === 0
+        ) {
             setError(
                 {
-                    title: 'Invalid priority',
-                    message: 'Priority should be > 0.',
+                    title: 'Invalid Priority',
+                    message: 'Select a priority from dropdown.',
                 }
             );
             return;
@@ -58,13 +61,18 @@ const AddToDo = (props) => {
     return (
         <div>
             { error && <ErrorModal title={error.title} message={error.message} onConfirm={errorHandler} /> }
-            <Card className={classes.input}>
+            <Card className={`${classes.input} ${classes.select}`}>
                 <form onSubmit={addUserHandler}>
                     <label htmlFor="title">Title</label>
                     <input type="name" id="username" value={title} onChange={titleHandler} />
                     <label htmlFor="priority">Priority</label>
-                    <input type="number" id="priority" value={priority} onChange={priorityHandler} />
-                    <Button type="submit">Add To DO</Button>
+                    <select value={priority} onChange={priorityHandler}>
+                        <option value="">Select Priority</option>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                    <Button type="submit">Add To Do</Button>
                 </form>
             </Card>
         </div>

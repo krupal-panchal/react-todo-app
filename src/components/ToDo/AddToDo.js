@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import Card from "../UI/Card";
 import Button from "../UI/Button";
@@ -7,13 +7,19 @@ import classes from './AddToDo.module.css';
 
 const AddToDo = (props) => {
 
-    const [title, setTitle] = useState('');
-    const [priority, setPriority] = useState('');
+    const titleInputRef = useRef();
+    const prioritySelectRef = useRef();
+
+    /* const [title, setTitle] = useState('');
+    const [priority, setPriority] = useState(''); */
     const [error, setError] = useState();
 
     const addUserHandler = (event) => {
 
         event.preventDefault();
+        
+        const title = titleInputRef.current.value;
+        const priority = prioritySelectRef.current.value;
 
         if (
             title.trim().length === 0
@@ -40,19 +46,20 @@ const AddToDo = (props) => {
         }
 
         props.onAddToDo(title, priority);
-
-        setTitle('');
-        setPriority('');
+        titleInputRef.current.value = '';
+        prioritySelectRef.current.value = '';
+        /* setTitle('');
+        setPriority(''); */
 
     };
 
-    const titleHandler = (event) => {
+    /* const titleHandler = (event) => {
         setTitle(event.target.value);
     };
 
     const priorityHandler = (event) => {
         setPriority(event.target.value);
-    };
+    }; */
 
     const errorHandler = () => {
         setError(null);
@@ -64,9 +71,13 @@ const AddToDo = (props) => {
             <Card className={`${classes.input} ${classes.select}`}>
                 <form onSubmit={addUserHandler}>
                     <label htmlFor="title">Title</label>
-                    <input type="name" id="username" value={title} onChange={titleHandler} />
+                    <input
+                        type="name"
+                        id="username"
+                        ref={titleInputRef}
+                    />
                     <label htmlFor="priority">Priority</label>
-                    <select value={priority} onChange={priorityHandler}>
+                    <select ref={prioritySelectRef}>
                         <option value="">Select Priority</option>
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>
